@@ -1,0 +1,102 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>ECMAScript 6 - let</title>
+</head>
+<body>
+    <div id="root"></div>
+<script>
+    /* 
+    总结:
+        变量一定要在声明之后再使用。在同一个作用域重复声明的变量会报错 
+    */
+
+        console.log(a); //输出undefined
+        // console.log(c); // 报错ReferenceError
+    var a = [];
+    var b = [];
+    let c = 0;
+    for (var i=0; i<10; i++){
+    a[i] = function (){
+        console.log(i);
+    }
+    }
+    for (let i=0; i<10; i++){
+        b[i] = function (){
+            console.log(i);
+        }
+    }
+    for(let i=0; i<3; i++){
+        let i = "abc";
+        console.log(i); //abc * 3
+    } 
+    for(var i=0; i<3; i++){
+        var i = 10;
+        console.log(i); //10 * 1
+    }
+    a[6](); //10
+    b[6](); //6
+
+
+    // 暂时性死区
+    let d = 123;
+    if(true){
+        // console.log(d); // 报错ReferenceError
+        let d= 2123;
+    }
+    if(true){
+        // abc = "abc";// 报错ReferenceError
+        //console.log(abc);// 报错ReferenceError
+        let abc;
+        console.log(abc);//undefined
+        abc = "abc";
+        console.log(abc);//abc
+    }
+
+    // 重复声明变量
+    function abc(a){
+        // let a; 
+    }
+    function abd(a){
+        {
+            let a;
+        }
+    }
+    abc();// 报错ReferenceError
+    abd(); //不报错
+
+    // 块级作用域
+    function abe(){
+        console.log("I am Abel;");
+    }
+    (function(){
+        if(false){
+            function abe(){
+                console.log("我是明！");
+            }
+        }
+        abe(); //报错ReferenceError
+        /* 实际上自调函数里面的代码块是: 
+            let abe = undefined;
+            if(false){
+                function abe(){
+                    console.log("...");
+                }
+            }
+
+            因此，应该注意不要使用函数声明语句，推荐使用函数表达式
+            函数声明语句：function a(){}
+            函数表达式： let a = function (){}
+
+
+            注意：块级作用域允许声明函数的规则，只在使用大括号的情况下成立，如果没有大括号，会报错
+            eg：if(true)function (){}   //报错ReferenceError
+                if(true){ function (){}} //不报错
+        */
+    }());
+
+    document.getElementById("root");
+</script>
+</body>
+</html>

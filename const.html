@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>ECMAScript 6 - const</title>
+</head>
+<body>
+    <div id="root"></div>
+<script>
+    /* 
+    总结:
+        const声明的变量将是固定值，声明之后不能改变！
+        const 也只能在生命的作用域有效
+        const 保证的并不是值不能改变，而是变量指向的内存地址不能改变(将对象声明为常量要注意)
+        将对象冻结 Object.freeze();
+     */
+    const PI = 3.14;
+    // console.log(PI); // 3.14
+    // PI = 3.15; // 报错ReferenceError
+    // console.log(PI); 
+    // 作用域
+    if(true){
+        const a = 2;
+    }
+    // console.log(a); // a is not defined
+    // const 生命函数
+    const foo = {};
+    foo.name = "Abel";
+    console.log(foo.name);
+    // const foo = {}; // 报错ReferenceError
+</script>
+</body>
+</html>
